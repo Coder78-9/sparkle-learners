@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Sparkle learners - Final Test</title>
+  <style>
+  </style>
+</head>
+<body>
+  <h1>Sparkle learners - Final Test</h1>
+  <p>Test your knowledge from all previous lessons! Click an answer for each question. Correct answers will move you to the next question automatically.</p>
+
+  <button id="startquiz">Start Test</button>
+  <div id="quiz-area"></div>
+  <div id="feedback"></div>
+
+  <script>
+    var quizButton = document.getElementById("startquiz");
+    var quizArea = document.getElementById("quiz-area");
+    var feedback = document.getElementById("feedback");
+
+    var quizQuestions = [
+      // Math
+      { question: "What is the value of the 4 in 347?", choices: ["4", "40", "400", "4000"], correct: 1 },
+      { question: "23 × 12 using place value is:", choices: ["276", "230", "250", "300"], correct: 0 },
+      { question: "Which of these is a factor of 36?", choices: ["5", "6", "7", "8"], correct: 1 },
+      { question: "Which of these numbers is prime?", choices: ["9", "15", "7", "12"], correct: 2 },
+
+      // Reading
+      { question: "Main idea: 'Penguins swim well and live in groups.'", choices: ["Penguins are social swimmers", "Penguins live alone", "Penguins cannot swim", "Penguins fly"], correct: 0 },
+      { question: "Comparing lions and tigers: Lions live in groups, tigers live alone. This shows:", choices: ["Both are solitary", "Lions hunt alone", "Behavior difference between animals", "Tigers live in groups"], correct: 2 },
+      { question: "Cause and Effect: 'It rained all night, so streets flooded.' Cause?", choices: ["The ice melted", "It rained all night", "The streets flooded", "The sun rose"], correct: 1 },
+
+      // Science
+      { question: "During a new moon, we see:", choices: ["Whole moon", "Half moon", "None of the moon", "A little bit of the moon"], correct: 2 },
+      { question: "Why do planets stay in orbit around the Sun?", choices: ["Because of gravity", "Because of wind", "Because they want to", "Because of the Moon"], correct: 0 },
+      { question: "Spring tides happen when:", choices: ["Sun and Moon align", "Moon is full", "Moon is new", "Sun and Earth align"], correct: 0 }
+    ];
+
+    var currentQuestionIndex = 0;
+
+    function showQuestion(index) {
+      feedback.textContent = "";
+      var question = quizQuestions[index];
+      quizArea.innerHTML = "<p>" + question.question + "</p>";
+      question.choices.forEach(function(choice, i) {
+        var btn = document.createElement("button");
+        btn.textContent = choice;
+        btn.addEventListener("click", function() {
+          checkAnswer(i);
+        });
+        quizArea.appendChild(btn);
+        quizArea.appendChild(document.createElement("br"));
+      });
+    }
+
+    function checkAnswer(choiceIndex) {
+      var question = quizQuestions[currentQuestionIndex];
+      if (choiceIndex === question.correct) {
+        feedback.textContent = "✅ Correct!";
+        currentQuestionIndex++;
+        if (currentQuestionIndex < quizQuestions.length) {
+          setTimeout(function() {
+            showQuestion(currentQuestionIndex);
+          }, 1000);
+        } else {
+          quizArea.innerHTML = "<p>🎉 Final Test Complete!</p>";
+          feedback.textContent = "";
+        }
+      } else {
+        feedback.textContent = "❌ Try again!";
+      }
+    }
+
+    quizButton.addEventListener("click", function() {
+      currentQuestionIndex = 0;
+      showQuestion(currentQuestionIndex);
+    });
+  </script>
+</body>
+</html>
